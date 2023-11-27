@@ -1234,25 +1234,25 @@
     ]
   },
   "packageFolders": {
-    "/Users/rasmusmeldgaardjensen/.nuget/packages/": {}
+    "/Users/christianboes/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/ProductAPI.csproj",
+      "projectUniqueName": "/Users/christianboes/Documents/EAAA/4. semester/Projekt/GrønOlsen/product-svc/ProductAPI/ProductAPI.csproj",
       "projectName": "ProductAPI",
-      "projectPath": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/ProductAPI.csproj",
-      "packagesPath": "/Users/rasmusmeldgaardjensen/.nuget/packages/",
-      "outputPath": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/obj/",
+      "projectPath": "/Users/christianboes/Documents/EAAA/4. semester/Projekt/GrønOlsen/product-svc/ProductAPI/ProductAPI.csproj",
+      "packagesPath": "/Users/christianboes/.nuget/packages/",
+      "outputPath": "/Users/christianboes/Documents/EAAA/4. semester/Projekt/GrønOlsen/product-svc/ProductAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/rasmusmeldgaardjensen/.nuget/NuGet/NuGet.Config"
+        "/Users/christianboes/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.304/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1307,7 +1307,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
       }
     }
   }

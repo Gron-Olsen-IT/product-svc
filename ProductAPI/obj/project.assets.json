@@ -465,11 +465,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mrlaj\\Programming\\4. Semester\\ProductSvc\\ProductAPI\\ProductAPI.csproj",
+      "projectUniqueName": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\ProductAPI\\ProductAPI.csproj",
       "projectName": "ProductAPI",
-      "projectPath": "C:\\Users\\mrlaj\\Programming\\4. Semester\\ProductSvc\\ProductAPI\\ProductAPI.csproj",
+      "projectPath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\ProductAPI\\ProductAPI.csproj",
       "packagesPath": "C:\\Users\\mrlaj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mrlaj\\Programming\\4. Semester\\ProductSvc\\ProductAPI\\obj\\",
+      "outputPath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\ProductAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mrlaj\\AppData\\Roaming\\NuGet\\NuGet.Config",

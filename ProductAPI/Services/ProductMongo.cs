@@ -15,11 +15,11 @@ public class ProductMongo : IProductService
 
     public ProductMongo()
     {
-        string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://admin:1234@localhost:27017/?authMechanism=DEFAULT";
+        //string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://admin:1234@localhost:27017/?authMechanism=DEFAULT";
+        string connectionString = "mongodb://admin:1234@localhost:27017";
+        var mongoDatabase = new MongoClient(connectionString).GetDatabase("ProductDB");
 
-        var mongoDatabase = new MongoClient(connectionString).GetDatabase("Product");
-
-        _collection = mongoDatabase.GetCollection<Product>("Products");
+        _collection = mongoDatabase.GetCollection<Product>("products");
     }
     public Task<List<Product>> Get()
     {
@@ -31,22 +31,29 @@ public class ProductMongo : IProductService
         throw new NotImplementedException();
     }
 
-    public async Task<HttpStatusCode> Post([FromBody] Product product)
+    public async Task<HttpStatusCode> Post(Product product)
     {
-        System.Console.WriteLine(product.SellerId);
-        var result = _collection.InsertOneAsync(product);
-        
-        System.Console.WriteLine(result.ToString());
-        if (result.IsCompletedSuccessfully)
-        {
+        try {
+            await _collection.InsertOneAsync(product);
             return HttpStatusCode.OK;
-        }
-
-        else{
+        }catch (Exception e)
+        {
+            Console.WriteLine(e);
             return HttpStatusCode.InternalServerError;
         }
 
 
+        /*
+        var result = await _collection.InsertOneAsync(product);
+        if (result.IsCompletedSuccessfully)
+        {
+            return HttpStatusCode.OK;
+        }
+        else
+        {
+            return HttpStatusCode.InternalServerError;
+        }
+        */
     }
 
     public Task<HttpStatusCode> Put(string id, [FromBody] Product product)

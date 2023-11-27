@@ -15,7 +15,7 @@ public class ProductMongo : IProductService
 
     public ProductMongo()
     {
-        string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://localhost:27017";
+        string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://admin:1234@localhost:27017/?authMechanism=DEFAULT";
 
         var mongoDatabase = new MongoClient(connectionString).GetDatabase("Product");
 
@@ -33,7 +33,10 @@ public class ProductMongo : IProductService
 
     public async Task<HttpStatusCode> Post([FromBody] Product product)
     {
+        System.Console.WriteLine(product.SellerId);
         var result = _collection.InsertOneAsync(product);
+        
+        System.Console.WriteLine(result.ToString());
         if (result.IsCompletedSuccessfully)
         {
             return HttpStatusCode.OK;

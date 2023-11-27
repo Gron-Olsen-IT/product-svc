@@ -17,7 +17,7 @@ public class ProductController : ControllerBase
     [HttpGet("{id}")]
     public Product Get(string id)
     {
-        return new Product();
+        throw new NotImplementedException("Not implemented yet");
     }
 
     [HttpPost]

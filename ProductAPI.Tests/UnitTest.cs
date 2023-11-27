@@ -21,10 +21,8 @@ public class Tests
     [Test]
     public async Task ProductCreateSuccesful()
     {
-        Product product = new Product();
-        product.SellerId = "Test";
-        product.Valuation = 1000;
-        HttpStatusCode response = await _service.Post(new Product());
+        Product product = new Product("10", 1000, DateTime.Now, 100);
+        HttpStatusCode response = await _service.Post(product);
         //Assert.AreEqual(HttpStatusCode.Created, response);
         Assert.That(response, Is.EqualTo(HttpStatusCode.OK));
     }

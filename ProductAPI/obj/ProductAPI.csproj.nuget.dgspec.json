@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\ProductAPI.csproj": {}
+    "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\ProductAPI.csproj": {
+    "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\ProductAPI.csproj",
+        "projectUniqueName": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj",
         "projectName": "ProductAPI",
-        "projectPath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\ProductAPI.csproj",
-        "packagesPath": "C:\\Users\\mrlaj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\obj\\",
+        "projectPath": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj",
+        "packagesPath": "/Users/rasmusmeldgaardjensen/.nuget/packages/",
+        "outputPath": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\mrlaj\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/rasmusmeldgaardjensen/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +42,14 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.22.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.22.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -68,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
         }
       }
     }

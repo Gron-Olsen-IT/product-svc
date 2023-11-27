@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PfxirY59XoON9XhgNo2Jnqh0qTDG/z7Fc+92hIuc1S20cUYC1QKdp4QihHTbTiZfLkUp98Q7+4FeaRm/+G0IAw==",
+  "dgSpecHash": "oSDphAm0lJ/KifrISwjjYR8qK9vRweQxDsdbuxo2uxEe5Ywk4YwIkU/JGzM75MhIWSWWXj2yyB5vdYJGxC2ghg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mrlaj\\Programming\\4. Semester\\ProductSvc\\ProductAPI.Test\\ProductAPI.Test.csproj",
+  "projectFilePath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\ProductAPI.Tests\\ProductAPI.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mrlaj\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\mrlaj\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",

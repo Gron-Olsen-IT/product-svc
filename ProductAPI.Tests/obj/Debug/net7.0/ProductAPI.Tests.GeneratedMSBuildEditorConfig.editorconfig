@@ -7,5 +7,5 @@ build_property.InvariantGlobalization =
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = ProductAPI.Test
-build_property.ProjectDir = C:\Users\mrlaj\Programming\4. Semester\ProductSvc\ProductAPI.Test\
+build_property.RootNamespace = ProductAPI.Tests
+build_property.ProjectDir = C:\Users\mrlaj\Programming\4-semester-eksamensprojekt\product-svc\ProductAPI.Tests\

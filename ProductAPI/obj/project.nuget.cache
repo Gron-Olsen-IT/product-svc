@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Gp7BzhQmMOWylDN9VDUoQG9u7wSsjXVe+U+oMhft8r636M49BcgVdv1UxgElT4uxSZX5dSqdYpLc/47hV9uAzg==",
+  "dgSpecHash": "pG5IrnLv5WY3I6O1zBCc6gG0PNTJ45pqrsH/uXzMhF6jd/frwjegnf8osakGuj3w5QlFqn6j96k4aDqimN36RA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\ProductAPI\\ProductAPI.csproj",
+  "projectFilePath": "C:\\Users\\mrlaj\\Programming\\4-semester-eksamensprojekt\\product-svc\\productAPI\\ProductAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mrlaj\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
     "C:\\Users\\mrlaj\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

@@ -1,0 +1,6 @@
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/bin/Debug/net7.0/CoverletSourceRootsMapping
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/obj/Debug/net7.0/ProductAPI.Tests.csproj.AssemblyReference.cache
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/obj/Debug/net7.0/ProductAPI.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/obj/Debug/net7.0/ProductAPI.Tests.AssemblyInfoInputs.cache
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/obj/Debug/net7.0/ProductAPI.Tests.AssemblyInfo.cs
+/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI.Tests/obj/Debug/net7.0/ProductAPI.Tests.csproj.CoreCompileInputs.cache

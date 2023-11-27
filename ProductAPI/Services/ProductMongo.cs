@@ -1,3 +1,6 @@
+using System.Net;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ProductAPI.Models;
@@ -27,12 +30,19 @@ public class ProductMongo : IProductService
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> Post([FromBody] Product product)
+    public async Task<HttpStatusCode> Post([FromBody] Product product)
     {
-        return await _collection.InsertOneAsync(product);
+        try {
+             var result =  _collection.InsertOneAsync(product);
+             return HttpStatusCode.OK;
+        }
+        catch (Exception e) {
+            Console.WriteLine(e); 
+            return HttpStatusCode.InternalServerError;
+        }
     }
 
-    public Task<IActionResult> Put(string id, [FromBody] Product product)
+    public Task<HttpStatusCode> Put(string id, [FromBody] Product product)
     {
         throw new NotImplementedException();
     }

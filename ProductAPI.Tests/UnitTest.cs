@@ -2,12 +2,14 @@ namespace ProductAPI.Tests;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 using ProductAPI.Models;
 using ProductAPI.Services;
 
 public class Tests
 {
-    private readonly ProductService productService = new ProductService();
+    private readonly ProductMongo service = new ProductMongo();
 
     [SetUp]
     public void Setup()
@@ -17,7 +19,7 @@ public class Tests
     [Test]
     public async Task ProductCreateSuccesful()
     {
-        IActionResult response = await productService.Post(new Product());
+        IActionResult response = await service.Post(new Product());
         Assert.IsInstanceOf<OkResult>(response);
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uw4YCWIu8pik35FsqevckwNH14pnox/xm2LnKFKqt/o5WrcRfh7P4mk1ZOcdSe/8Q95O8SPvF1OFwWmbxOoEYw==",
+  "dgSpecHash": "n4bc2upPQ/l8QVy23ZCW3ltKHw2GgCx+bq7NktiugLQwdGOMN/04ECcE6OJ5Je/H51tffMCaT/qiEfWQyVNlSQ==",
   "success": true,
-  "projectFilePath": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj",
+  "projectFilePath": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/productAPI/ProductAPI.csproj",
   "expectedPackageFiles": [
     "/Users/rasmusmeldgaardjensen/.nuget/packages/awssdk.core/3.7.100.14/awssdk.core.3.7.100.14.nupkg.sha512",
     "/Users/rasmusmeldgaardjensen/.nuget/packages/awssdk.securitytoken/3.7.100.14/awssdk.securitytoken.3.7.100.14.nupkg.sha512",

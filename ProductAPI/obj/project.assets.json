@@ -1239,11 +1239,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj",
+      "projectUniqueName": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/ProductAPI.csproj",
       "projectName": "ProductAPI",
-      "projectPath": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/ProductAPI.csproj",
+      "projectPath": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/ProductAPI.csproj",
       "packagesPath": "/Users/rasmusmeldgaardjensen/.nuget/packages/",
-      "outputPath": "/Users/rasmusmeldgaardjensen/RiderProjects/product-svc/ProductAPI/obj/",
+      "outputPath": "/Users/rasmusmeldgaardjensen/Desktop/4-Semester/Eksamensprojekt/product-svc/ProductAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rasmusmeldgaardjensen/.nuget/NuGet/NuGet.Config"

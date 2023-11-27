@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Models;
 
@@ -8,7 +9,7 @@ public interface IProductService
 
     public Task<Product> Get(string id);
 
-    public Task<IActionResult> Post([FromBody] Product product);
+    public Task<HttpStatusCode> Post([FromBody] Product product);
 
-    public Task<IActionResult> Put(string id, [FromBody] Product product);
+    public Task<HttpStatusCode> Put(string id, [FromBody] Product product);
 }

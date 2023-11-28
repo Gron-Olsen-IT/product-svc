@@ -8,20 +8,21 @@ namespace ProductAPI.Tests;
 
 public class ProductRepositoryCreate
 {
-    private ProductMongo _service;
-    private Mock< IMongoCollection<Product> > _mockCollectionProduct;
+    private ProductService _service;
+    private Mock<IProductRepository> _mockMongoRepository;
     private Mock<IAPIService> _mockApiService;
+
 
     [SetUp]
     public void Setup()
     {
-        _mockCollectionProduct = new Mock< IMongoCollection<Product> >();
+        _mockMongoRepository = new Mock<IProductRepository>();
         
         _mockApiService = new Mock<IAPIService>();
         string sellerIdValid = "1000";
         _mockApiService.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
 
-        _service = new ProductMongo(_mockCollectionProduct.Object, _mockApiService.Object);
+        _service = new ProductService(_mockApiService.Object, _mockMongoRepository.Object);
     }
 
     [Test]

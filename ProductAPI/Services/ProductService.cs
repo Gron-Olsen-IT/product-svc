@@ -1,3 +1,5 @@
+
+
 using System;
 using System.Net;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -10,30 +12,27 @@ using ProductAPI.Models;
 namespace ProductAPI.Services;
 
 
-public class ProductMongo : IProductService
+public class ProductService : IProductService
 {
-    private readonly IMongoCollection<Product> _collection;
+  
     private readonly IAPIService _apiService;
+    private readonly IProductRepository _productRepository;
 
-    public ProductMongo(IAPIService apiService)
+    public ProductService(IProductRepository productRepository)
     {
-        //string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://admin:1234@localhost:27017/?authMechanism=DEFAULT";
-        string connectionString = "mongodb://admin:1234@localhost:27017";
-        var mongoDatabase = new MongoClient(connectionString).GetDatabase("ProductDB");
-
-        _collection = mongoDatabase.GetCollection<Product>("products");
-        _apiService = apiService;
+        _productRepository = productRepository;
+        _apiService = new APIService();
     }
 
-    public ProductMongo(IMongoCollection<Product> mongoCollection, IAPIService apiService)
+    public ProductService(IAPIService apiService, IProductRepository productRepository)
     {
-        _collection = mongoCollection;
+        _productRepository = productRepository;
         _apiService = apiService;
     }
 
     public async Task<List<Product>> Get()
     {
-        return await _collection.Find(_ => true).ToListAsync();
+        return await _productRepository.Get();
     }
 
     public async Task<Product> Get(string id)
@@ -64,7 +63,7 @@ public class ProductMongo : IProductService
                 //throw new Exception("Status is negative");
                 throw new ArgumentException("Status is negative");
             }
-            await _collection.InsertOneAsync(product);
+            await _productRepository.Post(product);
             return HttpStatusCode.OK;
         }
         catch (ArgumentException e)

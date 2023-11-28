@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProductAPI.Tests
-build_property.ProjectDir = /Users/christianboes/Documents/EAAA/4. semester/Projekt/GrønOlsen/product-svc/ProductAPI.Tests/
+build_property.ProjectDir = C:\Users\mrlaj\Programming\4-semester-eksamensprojekt\product-svc\ProductAPI.Tests\

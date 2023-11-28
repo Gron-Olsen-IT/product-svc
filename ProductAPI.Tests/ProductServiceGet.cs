@@ -8,35 +8,29 @@ namespace ProductAPI.Tests;
 
 public class ProductRepositoryGet
 {
-    private ProductMongo _service;
-    private Mock<IMongoCollection<Product>> _mockCollectionProduct;
-    //private Mock<IAPIService> _mockApiService;
+    private Mock<IProductRepository> _mockMongoRepository;
+    private IProductService _service;
 
     [SetUp]
     public void Setup()
     {
-        _mockCollectionProduct = new Mock<IMongoCollection<Product>>();
-        var testData = new List<Product>
-            {
-                new Product ( "10", 1000, DateTime.Now, 5 ),
-                new Product ( "11", 500, DateTime.Now, 2 )
-            };
-        // Setup the Find method to return the test data
-        //_mockCollectionProduct.Setup(x=> x.InsertMany(testData, null, default));
-        _service = new ProductMongo(_mockCollectionProduct.Object, new APIService());
-        _service.Post(new Product ( "10", 1000, DateTime.Now, 5 ));
-        _service.Post(new Product ( "11", 500, DateTime.Now, 2 ));
-
-        
+        _mockMongoRepository = new Mock<IProductRepository>();
+        _service = new ProductService(_mockMongoRepository.Object);
     }
 
     [Test]
     public async Task ProductGetSuccesful()
     {
+        var testData = new List<Product>
+            {
+                new Product ( "10", 1000, DateTime.Now, 5 ),
+                new Product ( "11", 500, DateTime.Now, 2 )
+            };
+        _mockMongoRepository.Setup(service => service.Get()).ReturnsAsync(testData);
         //Arrange
         List<Product> response = await _service.Get();
         //Act
-        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Count, Is.EqualTo(2));
 
     }
 

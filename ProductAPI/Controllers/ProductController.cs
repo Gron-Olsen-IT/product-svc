@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Models;
+using ProductAPI.Services;
 
 namespace ProductAPI.Controllers;
 
@@ -7,7 +8,7 @@ namespace ProductAPI.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-
+    private readonly IProductService _service;
     [HttpGet]
     public IEnumerable<Product> Get()
     {
@@ -23,6 +24,7 @@ public class ProductController : ControllerBase
     [HttpPost]
     public void Post([FromBody] Product product)
     {
+        _service.Post(product);
     }
 
     [HttpPut("{id}")]

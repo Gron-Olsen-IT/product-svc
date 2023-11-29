@@ -86,8 +86,39 @@ public class ProductService : IProductService
         }
     }
 
-    public Task<HttpStatusCode> Put(string id, [FromBody] Product product)
-    {
-        throw new NotImplementedException();
+    public async Task<HttpStatusCode> Put(string id, [FromBody] Product product)
+    {   
+        try {
+            if (product == null)
+            {
+                throw new ArgumentException("Product is null");
+            }
+            if (product.SellerId == null)
+            {
+                throw new ArgumentException("SellerId is null");
+            }
+            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK){
+                return HttpStatusCode.BadRequest;
+            }
+            if (product.Valuation < 0)
+            {
+                throw new ArgumentException("Valuation is negative");
+            }
+            if (product.Status < 0 || product.Status > 10)
+            {
+                //throw new Exception("Status is negative");
+                throw new ArgumentException("Status is negative");
+            }
+            await _productRepository.Put(id, product);
+            return HttpStatusCode.OK;
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e);
+            return HttpStatusCode.BadRequest;
+        }catch
+        {
+            return HttpStatusCode.InternalServerError;
+        }
     }
 }

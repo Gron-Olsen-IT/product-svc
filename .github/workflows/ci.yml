@@ -42,5 +42,3 @@ jobs:
           git fetch origin
           git merge --ff-only origin/develop
           git push origin main
-      
-    

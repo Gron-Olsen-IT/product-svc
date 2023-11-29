@@ -28,7 +28,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
   merge_to_main:
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push' && needs.build-on-develop.result == 'success'
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push' && needs.build.result == 'success'
     runs-on: ubuntu-latest
     needs: build
     steps:

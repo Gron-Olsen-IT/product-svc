@@ -52,6 +52,14 @@ public class ProductRepositoryMongo : IProductRepository
 
     public Task<HttpStatusCode> Put(string id, [FromBody] Product product)
     {
-        throw new NotImplementedException();
+        try {
+            _collection.ReplaceOne(product => product.Id == id, product);
+            return Task.FromResult(HttpStatusCode.OK);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return Task.FromResult(HttpStatusCode.InternalServerError);
+        }
     }
 }

@@ -86,7 +86,7 @@ public class ProductService : IProductService
         }
     }
 
-    public Task<HttpStatusCode> Put(Guid id, [FromBody] Product product)
+    public Task<HttpStatusCode> Put(string id, [FromBody] Product product)
     {
         throw new NotImplementedException();
     }

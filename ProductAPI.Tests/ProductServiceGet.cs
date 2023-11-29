@@ -22,11 +22,11 @@ public class ProductRepositoryGet
     [SetUp]
     public void Setup()
     {
-        
         testData[0].Id = "0";
         testData[1].Id = "1";
         testData[2].Id = "2";
         testData[3].Id = "3";
+        
         _mockMongoRepository = new Mock<IProductRepository>();
         _mockMongoRepository.Setup(service => service.Get()).ReturnsAsync(testData);
         _mockMongoRepository.Setup(service => service.Get("3")).ReturnsAsync(testData[1]);

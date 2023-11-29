@@ -21,8 +21,6 @@ public class ProductController : ControllerBase
         _logger.LogInformation(1, $"ProductService responding from {_ipaddr}");
     }
 
-
-
     [HttpGet]
     public async Task<List<Product>> Get()
     {
@@ -32,7 +30,7 @@ public class ProductController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Get Testing moreeeeeeeee -boes");
+            _logger.LogError(e, "Error in Get Testing moreeeeeeeee -boes make change again");
             throw;
         }
     }

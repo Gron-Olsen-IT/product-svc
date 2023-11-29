@@ -9,9 +9,6 @@ on:
   push:
     branches: [ "develop" ]
 
-permissions:
-  contents:write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,4 +41,5 @@ jobs:
           git config --global user.email 'cboes2402@gmail.com'
           git fetch origin
           git merge --ff-only origin/develop
+          git remote set-url origin "https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
           git push origin main

@@ -44,7 +44,7 @@ public class ProductController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Get");
+            _logger.LogError(e, "Error in Get by id - boes");
             throw;
         }
     }

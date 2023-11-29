@@ -30,7 +30,7 @@ public class ProductController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Get Testing moreeeeeeeee -Lajer no happy");
+            _logger.LogError(e, "Error in Get Testing moreeeeeeeee -Lajer");
             throw;
         }
     }

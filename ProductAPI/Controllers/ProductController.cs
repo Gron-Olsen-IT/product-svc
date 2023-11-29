@@ -8,17 +8,17 @@ namespace ProductAPI.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    private readonly IProductService _service;
+    private readonly IProductService _service = new ProductService();
     [HttpGet]
-    public IEnumerable<Product> Get()
+    public async Task<List<Product>> Get()
     {
-        return new List<Product>();
+        return await _service.Get();
     }
 
     [HttpGet("{id}")]
-    public Product Get(string id)
+    public async Task<Product> Get(string id)
     {
-        throw new NotImplementedException("Not implemented yet");
+        return await _service.Get(id);
     }
 
     [HttpPost]
@@ -28,7 +28,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(string id, [FromBody] Product product)
+    public void Put(Guid id, [FromBody] Product product)
     {
     }
 

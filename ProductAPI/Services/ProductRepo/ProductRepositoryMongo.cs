@@ -50,10 +50,10 @@ public class ProductRepositoryMongo : IProductRepository
         }
     }
 
-    public Task<HttpStatusCode> Put(string id, [FromBody] Product product)
+    public Task<HttpStatusCode> Put([FromBody] Product product)
     {
         try {
-            _collection.ReplaceOne(product => product.Id == id, product);
+            _collection.ReplaceOne(x => x.Id == product.Id, product);
             return Task.FromResult(HttpStatusCode.OK);
         }
         catch (Exception e)

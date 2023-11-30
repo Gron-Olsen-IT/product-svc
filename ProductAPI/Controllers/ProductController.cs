@@ -64,11 +64,11 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(string id, [FromBody] Product product)
+    public void Put( [FromBody] Product product)
     {
         try
         {
-            _service.Put(id, product);
+            _service.Put(product);
         }
         catch (Exception e)
         {

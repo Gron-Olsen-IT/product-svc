@@ -13,5 +13,5 @@ public interface IProductService
 
     public Task<HttpStatusCode> Post([FromBody] Product product);
 
-    public Task<HttpStatusCode> Put(string id, [FromBody] Product product);
+    public Task<HttpStatusCode> Put([FromBody] Product product);
 }

@@ -11,6 +11,15 @@ public record Product
         CreateAt = createAt;
         Status = status;
     }
+
+    public Product (string id, string sellerId, int valuation, DateTime createAt, int status)
+    {
+        Id = id;
+        SellerId = sellerId;
+        Valuation = valuation;
+        CreateAt = createAt;
+        Status = status;
+    }
     
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

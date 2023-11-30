@@ -8,8 +8,11 @@ logger.Debug("init main");
 
 try
 {
-
     var builder = WebApplication.CreateBuilder(args);
+
+    builder.Services.AddScoped<IProductService, ProductService>();
+    builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();
+    builder.Services.AddScoped<IAPIService, APIService>();
 
     // Add services to the container.
     builder.Logging.ClearProviders();

@@ -2,6 +2,7 @@
 
 using System;
 using System.Net;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,23 +17,28 @@ public class ProductService : IProductService
 {
     private readonly IAPIService _apiService;
     private readonly IProductRepository _productRepository;
+    private readonly ILogger<ProductService> _logger;
 
-    public ProductService()
+    public ProductService(ILogger<ProductService> logger)
     {
         _productRepository = new ProductRepositoryMongo();
         _apiService = new APIService();
+        _logger = logger;
     }
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
         _apiService = new APIService();
+        _logger = logger;
+
     }
 
-    public ProductService(IAPIService apiService, IProductRepository productRepository)
+    public ProductService(IAPIService apiService, IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
         _apiService = apiService;
+        _logger = logger;
     }
 
     public async Task<List<Product>> Get()
@@ -50,10 +56,12 @@ public class ProductService : IProductService
         return _productRepository.Get(ids);
     }
 
-    public async Task<HttpStatusCode> Post(Product product)
+    public async Task<Product> Post(ProductDTO productDTO)
     {
+        Product product = new Product(productDTO.SellerId, productDTO.Valuation, productDTO.CreateAt, productDTO.Status);
         try
         {
+            _logger.LogInformation("User is posting a product", product);
             if (product == null)
             {
                 throw new ArgumentException("Product is null");
@@ -62,12 +70,15 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
+            /*
             if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK)
             {
-                return HttpStatusCode.BadRequest;
+                throw new ArgumentException("SellerId is not valid");
             }
+            */
             if (product.Valuation < 0)
             {
+                _logger.LogError("Valuation is negative");
                 throw new ArgumentException("Valuation is negative");
             }
             if (product.Status < 0 || product.Status > 10)
@@ -76,20 +87,22 @@ public class ProductService : IProductService
                 throw new ArgumentException("Status is negative");
             }
             await _productRepository.Post(product);
-            return HttpStatusCode.OK;
+            _logger.LogInformation("Product posted", product);
+            return product;
         }
         catch (ArgumentException e)
         {
-            Console.WriteLine(e);
-            return HttpStatusCode.BadRequest;
+            _logger.LogError(e, "Error in Post: ArgumentException");
+            throw;
         }
         catch
         {
-            return HttpStatusCode.InternalServerError;
+            _logger.LogError("Error in Post");
+            throw;
         }
     }
 
-    public async Task<HttpStatusCode> Put([FromBody] Product product)
+    public async Task<Product> Put([FromBody] Product product)
     {
 
         try
@@ -119,18 +132,18 @@ public class ProductService : IProductService
             if (await _productRepository.Put(product) != HttpStatusCode.OK)
             {
                 throw new ArgumentException("Product not found");            }
-            return HttpStatusCode.OK;
+            return product;
 
         }
 
         catch (ArgumentException e)
         {
             Console.WriteLine(e);
-            return HttpStatusCode.BadRequest;
+            throw;
         }
         catch
         {
-            return HttpStatusCode.Locked;
+            throw;
         }
     }
 }

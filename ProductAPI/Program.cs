@@ -12,7 +12,7 @@ try
 
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();
-    builder.Services.AddScoped<IAPIService, APIService>();
+    builder.Services.AddScoped<IInfraRepo, InfraRepoRender>();
 
     // Add services to the container.
     builder.Logging.ClearProviders();

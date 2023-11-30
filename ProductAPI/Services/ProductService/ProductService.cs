@@ -15,29 +15,16 @@ namespace ProductAPI.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IAPIService _apiService;
+    private readonly IInfraRepo _InfraRepo;
     private readonly IProductRepository _productRepository;
     private readonly ILogger<ProductService> _logger;
 
-    public ProductService(ILogger<ProductService> logger)
-    {
-        _productRepository = new ProductRepositoryMongo();
-        _apiService = new APIService();
-        _logger = logger;
-    }
 
-    public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
+
+    public ProductService(IInfraRepo InfraRepo, IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
-        _apiService = new APIService();
-        _logger = logger;
-
-    }
-
-    public ProductService(IAPIService apiService, IProductRepository productRepository, ILogger<ProductService> logger)
-    {
-        _productRepository = productRepository;
-        _apiService = apiService;
+        _InfraRepo = InfraRepo;
         _logger = logger;
     }
 
@@ -71,7 +58,7 @@ public class ProductService : IProductService
                 throw new ArgumentException("SellerId is null");
             }
             /*
-            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            if (await _InfraRepo.verifyUser(product.SellerId) != HttpStatusCode.OK)
             {
                 throw new ArgumentException("SellerId is not valid");
             }
@@ -115,7 +102,7 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
-            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            if (await _InfraRepo.verifyUser(product.SellerId) != HttpStatusCode.OK)
             {
                 throw new ArgumentException("SellerId is not valid");
             }

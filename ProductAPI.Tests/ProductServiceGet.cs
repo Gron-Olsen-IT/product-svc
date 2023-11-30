@@ -12,6 +12,7 @@ public class ProductRepositoryGet
     private Mock<IProductRepository> _mockMongoRepository;
     private IProductService _service;
     Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
+    Mock<IInfraRepo> _mockInfraRepo = new Mock<IInfraRepo>();
 
     List<Product> testData = new List<Product>
             {
@@ -30,11 +31,12 @@ public class ProductRepositoryGet
         testData[3].Id = "3";
         
         _mockMongoRepository = new Mock<IProductRepository>();
+        
         _mockMongoRepository.Setup(service => service.Get()).ReturnsAsync(testData);
         _mockMongoRepository.Setup(service => service.Get("3")).ReturnsAsync(testData[1]);
         _mockMongoRepository.Setup(service => service.Get(new List<string> { testData[0].Id!, testData[1].Id!, testData[2].Id!, testData[3].Id! })).ReturnsAsync(testData);
 
-        _service = new ProductService(_mockMongoRepository.Object, _mockLogger.Object);
+        _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
 
     [Test]

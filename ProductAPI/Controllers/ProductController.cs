@@ -61,11 +61,12 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ProductDTO product)
+    public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)
     {
-        if (await _service.Post(product) != null)
+        Product returnProduct = await _service.Post(productDTO);
+        if (returnProduct != null)
         {
-            return Ok(product);
+            return Ok(returnProduct);
         }
         else
         {

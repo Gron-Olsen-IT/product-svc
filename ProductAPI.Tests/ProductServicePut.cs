@@ -12,10 +12,7 @@ public class ProductServicePut
     private Mock<IProductRepository> _mockMongoRepository;
     private Mock<IAPIService> _mockApiService;
 
-
-
     Product product1 = new Product("1000", 1000, DateTime.Now, 8);
-
 
     [SetUp]
     public void Setup()

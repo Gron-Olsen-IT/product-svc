@@ -11,7 +11,7 @@ public interface IProductRepository
 
     public Task<List<Product>> Get(List<string> ids);
 
-    public Task<HttpStatusCode> Post([FromBody] Product product);
+    public Task<Product> Post([FromBody] Product product);
 
     public Task<HttpStatusCode> Put([FromBody] Product product);
 }

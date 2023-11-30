@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Models;
 using ProductAPI.Services;
@@ -8,17 +9,27 @@ namespace ProductAPI.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    private readonly IProductService _service = new ProductService();
     private readonly ILogger<ProductController> _logger;
+    private readonly IProductService _service;
 
 
-    public ProductController(ILogger<ProductController> logger)
+
+    public ProductController(ILogger<ProductController> logger, ILogger<ProductService> loggerService)
     {
+        _service = new ProductService(loggerService);
         _logger = logger;
-        var hostName = System.Net.Dns.GetHostName();
-        var ips = System.Net.Dns.GetHostAddresses(hostName);
-        var _ipaddr = ips.First().MapToIPv4().ToString();
-        _logger.LogInformation(1, $"ProductService responding from {_ipaddr}");
+        try
+        {
+            var hostName = System.Net.Dns.GetHostName();
+            var ips = System.Net.Dns.GetHostAddresses(hostName);
+            var _ipaddr = ips.First().MapToIPv4().ToString();
+            _logger.LogInformation(1, $"ProductService responding from {_ipaddr}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in ProductController");
+        }
+
     }
 
     [HttpGet]
@@ -50,30 +61,28 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromBody] Product product)
+    public async Task<IActionResult> Post([FromBody] ProductDTO product)
     {
-        try
+        if (await _service.Post(product) != null)
         {
-            _service.Post(product);
+            return Ok(product);
         }
-        catch (Exception e)
+        else
         {
-            _logger.LogError(e, "Error in Post");
-            throw;
+            return BadRequest();
         }
     }
 
     [HttpPut("{id}")]
-    public void Put( [FromBody] Product product)
+    public IActionResult Put([FromBody] Product product)
     {
-        try
+        if (_service.Put(product) != null)
         {
-            _service.Put(product);
+            return Ok(product);
         }
-        catch (Exception e)
+        else
         {
-            _logger.LogError(e, "Error in Put");
-            throw;
+            return BadRequest();
         }
     }
 

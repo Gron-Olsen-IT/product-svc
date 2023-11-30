@@ -3,6 +3,7 @@ using Moq;
 using MongoDB.Driver;
 using ProductAPI.Models;
 using ProductAPI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ProductAPI.Tests;
 
@@ -10,6 +11,7 @@ public class ProductRepositoryGet
 {
     private Mock<IProductRepository> _mockMongoRepository;
     private IProductService _service;
+    Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
 
     List<Product> testData = new List<Product>
             {
@@ -32,7 +34,7 @@ public class ProductRepositoryGet
         _mockMongoRepository.Setup(service => service.Get("3")).ReturnsAsync(testData[1]);
         _mockMongoRepository.Setup(service => service.Get(new List<string> { testData[0].Id!, testData[1].Id!, testData[2].Id!, testData[3].Id! })).ReturnsAsync(testData);
 
-        _service = new ProductService(_mockMongoRepository.Object);
+        _service = new ProductService(_mockMongoRepository.Object, _mockLogger.Object);
     }
 
     [Test]

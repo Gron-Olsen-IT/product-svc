@@ -3,6 +3,7 @@ using Moq;
 using MongoDB.Driver;
 using ProductAPI.Models;
 using ProductAPI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ProductAPI.Tests;
 
@@ -17,13 +18,15 @@ public class ProductServicePut
     [SetUp]
     public void Setup()
     {
+
+        Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
         _mockApiService = new Mock<IAPIService>();
         string sellerIdValid = "1000";
         _mockApiService.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
         product1.Id = "1";
         _mockMongoRepository = new Mock<IProductRepository>();
         _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(HttpStatusCode.OK);
-        _service = new ProductService(_mockApiService.Object, _mockMongoRepository.Object);
+        _service = new ProductService(_mockApiService.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
 
 
@@ -33,10 +36,12 @@ public class ProductServicePut
     [Test]
     public async Task ProductUpdatedSuccesfully()
     {
-
+        //Arrange
+        
         //Act
-        HttpStatusCode response = await _service.Put(product1);
-        Assert.That(response, Is.EqualTo(HttpStatusCode.OK));
+        Product responseProduct = await _service.Put(product1);
+        Assert.That(responseProduct, Is.EqualTo(product1));
+
     }
 
 

@@ -51,8 +51,9 @@ public class ProductService : IProductService
     }
 
     public async Task<HttpStatusCode> Post(Product product)
-    {  
-        try {
+    {
+        try
+        {
             if (product == null)
             {
                 throw new ArgumentException("Product is null");
@@ -61,7 +62,8 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
-            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK){
+            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            {
                 return HttpStatusCode.BadRequest;
             }
             if (product.Valuation < 0)
@@ -80,15 +82,18 @@ public class ProductService : IProductService
         {
             Console.WriteLine(e);
             return HttpStatusCode.BadRequest;
-        }catch
+        }
+        catch
         {
             return HttpStatusCode.InternalServerError;
         }
     }
 
-    public async Task<HttpStatusCode> Put(string id, [FromBody] Product product)
-    {   
-        try {
+    public async Task<HttpStatusCode> Put([FromBody] Product product)
+    {
+
+        try
+        {
             if (product == null)
             {
                 throw new ArgumentException("Product is null");
@@ -97,8 +102,9 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
-            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK){
-                return HttpStatusCode.BadRequest;
+            if (await _apiService.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            {
+                throw new ArgumentException("SellerId is not valid");
             }
             if (product.Valuation < 0)
             {
@@ -109,16 +115,22 @@ public class ProductService : IProductService
                 //throw new Exception("Status is negative");
                 throw new ArgumentException("Status is negative");
             }
-            await _productRepository.Put(id, product);
+
+            if (await _productRepository.Put(product) != HttpStatusCode.OK)
+            {
+                throw new ArgumentException("Product not found");            }
             return HttpStatusCode.OK;
+
         }
+
         catch (ArgumentException e)
         {
             Console.WriteLine(e);
             return HttpStatusCode.BadRequest;
-        }catch
+        }
+        catch
         {
-            return HttpStatusCode.InternalServerError;
+            return HttpStatusCode.Locked;
         }
     }
 }

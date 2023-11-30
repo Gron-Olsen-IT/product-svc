@@ -12,7 +12,9 @@ public class ProductRepositoryCreate
 {
     private ProductService _service;
     private Mock<IProductRepository> _mockMongoRepository;
-    private Mock<IAPIService> _mockApiService;
+    private Mock<IInfraRepo> _mockInfraRepo;
+
+    private Mock<ILogger<ProductService>> _mockLogger;
 
 
 
@@ -20,12 +22,13 @@ public class ProductRepositoryCreate
     public void Setup()
     {
         _mockMongoRepository = new Mock<IProductRepository>();
-        Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
-        _mockApiService = new Mock<IAPIService>();
+        _mockLogger = new Mock<ILogger<ProductService>>();
+        
+        _mockInfraRepo = new Mock<IInfraRepo>();
         string sellerIdValid = "1000";
-        _mockApiService.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
+        _mockInfraRepo.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
 
-        _service = new ProductService(_mockApiService.Object, _mockMongoRepository.Object, _mockLogger.Object);
+        _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
 
     [Test]

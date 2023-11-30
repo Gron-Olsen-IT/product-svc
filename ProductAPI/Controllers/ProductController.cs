@@ -14,9 +14,9 @@ public class ProductController : ControllerBase
 
 
 
-    public ProductController(ILogger<ProductController> logger, ILogger<ProductService> loggerService)
+    public ProductController(ILogger<ProductController> logger, IProductService service)
     {
-        _service = new ProductService(loggerService);
+        _service = service;
         _logger = logger;
         try
         {

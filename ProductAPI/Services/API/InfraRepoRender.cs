@@ -3,7 +3,7 @@ using System.Net;
 namespace ProductAPI.Services;
 
 
-public class APIService : IAPIService {
+public class InfraRepoRender : IInfraRepo {
 
     public async Task<HttpStatusCode> verifyUser(string userId){
         HttpClient httpClient = new HttpClient();

@@ -11,7 +11,7 @@ public class ProductServicePut
 {
     private ProductService _service;
     private Mock<IProductRepository> _mockMongoRepository;
-    private Mock<IAPIService> _mockApiService;
+    private Mock<IInfraRepo> _mockInfraRepo;
 
     Product product1 = new Product("1000", 1000, DateTime.Now, 8);
 
@@ -20,13 +20,13 @@ public class ProductServicePut
     {
 
         Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
-        _mockApiService = new Mock<IAPIService>();
+        _mockInfraRepo = new Mock<IInfraRepo>();
         string sellerIdValid = "1000";
-        _mockApiService.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
+        _mockInfraRepo.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
         product1.Id = "1";
         _mockMongoRepository = new Mock<IProductRepository>();
         _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(HttpStatusCode.OK);
-        _service = new ProductService(_mockApiService.Object, _mockMongoRepository.Object, _mockLogger.Object);
+        _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
 
 

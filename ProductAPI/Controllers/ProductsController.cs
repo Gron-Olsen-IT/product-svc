@@ -6,13 +6,11 @@ using ProductAPI.Services;
 namespace ProductAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[Controller]")]
 public class ProductsController : ControllerBase
 {
     private readonly ILogger<ProductsController> _logger;
     private readonly IProductService _service;
-
-
 
     public ProductsController(ILogger<ProductsController> logger, IProductService service)
     {
@@ -46,6 +44,20 @@ public class ProductsController : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    public async Task<Product> Get(string id)
+    {
+        try
+        {
+            return await _service.Get(id);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in Get by id - boes");
+            throw;
+        }
+    }
+
     [HttpPost("by-ids")]
     public async Task<IActionResult> Get([FromBody]List<string> Ids)
     {
@@ -62,19 +74,7 @@ public class ProductsController : ControllerBase
     }
 
 
-    [HttpGet("{id}")]
-    public async Task<Product> Get(string id)
-    {
-        try
-        {
-            return await _service.Get(id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error in Get by id - boes");
-            throw;
-        }
-    }
+    
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)

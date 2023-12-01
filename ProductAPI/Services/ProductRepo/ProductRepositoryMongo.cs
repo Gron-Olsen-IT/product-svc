@@ -49,12 +49,12 @@ public class ProductRepositoryMongo : IProductRepository
 
     public async Task<Product> Get(string id)
     {
-        return await _collection.Find(product => product.Id == id).FirstAsync();
+        return await _collection.Find(x => x.Id == id).FirstAsync();
     }
 
     public Task<List<Product>> Get(List<string> ids)
     {
-        return _collection.Find(product => ids.Contains(product.Id!)).ToListAsync();
+        return _collection.Find(x => ids.Contains(x.Id!)).ToListAsync();
     }
 
     public async Task<Product> Post([FromBody] Product product)

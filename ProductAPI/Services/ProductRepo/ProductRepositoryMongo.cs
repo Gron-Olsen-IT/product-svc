@@ -7,22 +7,41 @@ namespace ProductAPI.Services;
 
 public class ProductRepositoryMongo : IProductRepository
 {
-    private readonly IMongoCollection<Product> _collection;
+    private readonly IMongoCollection<Product>? _collection;
+    private readonly ILogger<ProductRepositoryMongo> _logger;
 
-    public ProductRepositoryMongo()
+    public ProductRepositoryMongo(ILogger<ProductRepositoryMongo> logger)
     {
-        string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING") ?? "mongodb://admin:1234@localhost:27017/?authMechanism=DEFAULT";
-        //string connectionString = "mongodb://admin:1234@localhost:27017";
-        var mongoDatabase = new MongoClient(connectionString).GetDatabase("product_db");
-
-        _collection = mongoDatabase.GetCollection<Product>("products");
+        _logger = logger;
+        try
+        {
+            var hostName = System.Net.Dns.GetHostName();
+            var ips = System.Net.Dns.GetHostAddresses(hostName);
+            var _ipaddr = ips.First().MapToIPv4().ToString();
+            Console.WriteLine($"ProductService responding from {_ipaddr}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        try {
+            string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")!;
+            var mongoDatabase = new MongoClient(connectionString).GetDatabase("product_db");
+            _collection = mongoDatabase.GetCollection<Product>("products");
+        
+        }catch(Exception e){
+            _logger.LogError("Something is wrong with the CONNECTION_STRING",  e);
+        }
+        
 
     }
 
-    public ProductRepositoryMongo(IMongoCollection<Product> mongoCollection)
+    public ProductRepositoryMongo(IMongoCollection<Product> mongoCollection, ILogger<ProductRepositoryMongo> logger)
     {
         _collection = mongoCollection;
+        _logger = logger;
     }
+
     public async Task<List<Product>> Get()
     {
         return await _collection.Find(_ => true).ToListAsync();
@@ -40,7 +59,7 @@ public class ProductRepositoryMongo : IProductRepository
 
     public async Task<Product> Post([FromBody] Product product)
     {
-        await _collection.InsertOneAsync(product);
+        await _collection!.InsertOneAsync(product);
         return product;
     }
 

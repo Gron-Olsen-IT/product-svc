@@ -89,7 +89,7 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<Product> Put([FromBody] Product product)
+    public async Task<Product> Put(Product product)
     {
 
         try
@@ -102,7 +102,7 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
-            if (await _InfraRepo.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            if (await _InfraRepo.doesUserExist(product.SellerId) != HttpStatusCode.OK)
             {
                 throw new ArgumentException("SellerId is not valid");
             }

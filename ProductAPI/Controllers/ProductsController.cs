@@ -42,8 +42,7 @@ public class ProductsController : ControllerBase
             try
             {
                 string headerValue = HttpContext.Request.Headers["JWT_TOKEN"]!;
-                string email = HttpContext.Request.Headers["EMAIL"]!;
-                var response = await _infraRepo.verifyUser(email, headerValue);
+                var response = await _infraRepo.authenticateUser(headerValue);
                 if (response != HttpStatusCode.OK)
                 {
                     return Unauthorized();

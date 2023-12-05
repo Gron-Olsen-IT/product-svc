@@ -6,18 +6,18 @@ using ProductAPI.Services;
 namespace ProductAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[Controller]")]
 public class ProductsController : ControllerBase
 {
     private readonly ILogger<ProductsController> _logger;
     private readonly IProductService _service;
+    private readonly IInfraRepo _infraRepo;
 
-
-
-    public ProductsController(ILogger<ProductsController> logger, IProductService service)
+    public ProductsController(ILogger<ProductsController> logger, IProductService service, IInfraRepo infraRepo)
     {
         _service = service;
         _logger = logger;
+        _infraRepo = infraRepo;
         try
         {
             var hostName = System.Net.Dns.GetHostName();
@@ -32,35 +32,36 @@ public class ProductsController : ControllerBase
 
     }
 
+
     [HttpGet]
-    public async Task<List<Product>> Get()
+    public async Task<ActionResult<List<Product>>> Get()
     {
         try
         {
+            // Get the value of a specific header
+            try
+            {
+                string headerValue = HttpContext.Request.Headers["JWT_TOKEN"]!;
+                string email = HttpContext.Request.Headers["EMAIL"]!;
+                var response = await _infraRepo.verifyUser(email, headerValue);
+                if (response != HttpStatusCode.OK)
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error in Get");
+                throw;
+            }
             return await _service.Get();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Get -Lajer");
+            _logger.LogError(e, "Error in Get");
             throw;
         }
     }
-
-    [HttpPost("by-ids")]
-    public async Task<IActionResult> Get([FromBody]List<string> Ids)
-    {
-        _logger.LogInformation("User is getting products by ids", Ids);
-        try
-        {
-            return Ok(await _service.Get(Ids));
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error in Get -Lajer");
-            throw;
-        }
-    }
-
 
     [HttpGet("{id}")]
     public async Task<Product> Get(string id)
@@ -71,10 +72,28 @@ public class ProductsController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Get by id - boes");
+            _logger.LogError(e, "Error in Get by id");
             throw;
         }
     }
+
+    [HttpPost("by-ids")]
+    public async Task<IActionResult> Get([FromBody] List<string> Ids)
+    {
+        _logger.LogInformation("User is getting products by ids", Ids);
+        try
+        {
+            return Ok(await _service.Get(Ids));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in Get");
+            throw;
+        }
+    }
+
+
+
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)

@@ -22,7 +22,7 @@ public class ProductServicePut
         Mock<ILogger<ProductService>> _mockLogger = new Mock<ILogger<ProductService>>();
         _mockInfraRepo = new Mock<IInfraRepo>();
         string sellerIdValid = "1000";
-        _mockInfraRepo.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
+        _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
         product1.Id = "1";
         _mockMongoRepository = new Mock<IProductRepository>();
         _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(HttpStatusCode.OK);

@@ -41,7 +41,7 @@ public class ProductsController : ControllerBase
             // Get the value of a specific header
             try
             {
-                string headerValue = HttpContext.Request.Headers["JWT_TOKEN"]!;
+                string headerValue = HttpContext.Request.Headers["JWT_TOKEN"]!.ToString();
                 _logger.LogInformation("User is getting products | Token: {Token}", headerValue);
                 var response = await _infraRepo.authenticateUser(headerValue);
                 _logger.LogInformation("User is getting products | Response: {Response}", response);

@@ -3,7 +3,7 @@ using System.Net;
 namespace ProductAPI.Services;
 
 
-public class InfraRepoRender : IInfraRepo {
+public class InfraRepoLocalhost : IInfraRepo {
 
     public async Task<HttpStatusCode> authenticateUser(string token){
         HttpClient httpClient = new HttpClient();

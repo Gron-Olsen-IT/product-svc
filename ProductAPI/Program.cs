@@ -6,13 +6,27 @@ using NLog.Web;
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
+
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
+    switch (Environment.GetEnvironmentVariable("ENVIRONMENT"))
+    {
+        case "docker":
+            builder.Services.AddScoped<IInfraRepo, InfraRepoDocker>();
+            break;
+        case "localhost":
+            builder.Services.AddScoped<IInfraRepo, InfraRepoLocalhost>();
+            break;
+        default:
+            builder.Services.AddScoped<IInfraRepo, InfraRepoLocalhost>();
+            break;
+    }
 
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();
-    builder.Services.AddScoped<IInfraRepo, InfraRepoRender>();
+    
 
     // Add services to the container.
     builder.Logging.ClearProviders();

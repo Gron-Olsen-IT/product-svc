@@ -26,7 +26,7 @@ public class ProductRepositoryCreate
         
         _mockInfraRepo = new Mock<IInfraRepo>();
         string sellerIdValid = "1000";
-        _mockInfraRepo.Setup(service => service.verifyUser(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
+        _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
 
         _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }

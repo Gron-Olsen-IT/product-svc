@@ -17,12 +17,14 @@ public class InfraRepoDocker : IInfraRepo {
     }
     public async Task<HttpStatusCode> authenticateUser(string token){
         // Sæt headeren
+        _logger.LogInformation("authenticateUser | Token:" + token);
         httpClient.DefaultRequestHeaders.Add("JWT_TOKEN", token);
         var response = await httpClient.GetAsync("auth/verify/");
         return response.StatusCode;
     }
 
     public async Task<HttpStatusCode> doesUserExist(string userId){
+        _logger.LogInformation("doesUserExist | userId:" + userId);
          try{
             var response = await httpClient.GetAsync("users/" + userId);
             return response.StatusCode;

@@ -42,7 +42,7 @@ public class ProductsController : ControllerBase
             try
             {
                 string headerValue = Request.Headers["JWT_TOKEN"]!;
-                _logger.LogInformation("User is getting products | Token: {Token}", headerValue);
+                _logger.LogInformation("User is getting products | Token: " + headerValue);
                 var response = await _infraRepo.authenticateUser(headerValue);
                 _logger.LogInformation("User is getting products | Response: {Response}", response);
                 if (response != HttpStatusCode.OK)

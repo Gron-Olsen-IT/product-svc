@@ -18,7 +18,7 @@ public class InfraRepoLocalhost : IInfraRepo {
         // Sæt headeren
         _logger.LogInformation("authenticateUser | Token:" + token);
         httpClient.DefaultRequestHeaders.Add("Authorization", token);
-        var response = await httpClient.GetAsync("auth/verify/");
+        var response = await httpClient.GetAsync("auth/authorize/");
         return response.StatusCode;
     }
 

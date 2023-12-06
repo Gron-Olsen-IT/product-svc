@@ -17,7 +17,7 @@ public class InfraRepoLocalhost : IInfraRepo {
     public async Task<HttpStatusCode> authenticateUser(string token){
         // Sæt headeren
         _logger.LogInformation("authenticateUser | Token:" + token);
-        httpClient.DefaultRequestHeaders.Add("JWT_TOKEN", token);
+        httpClient.DefaultRequestHeaders.Add("Authorization", token);
         var response = await httpClient.GetAsync("auth/verify/");
         return response.StatusCode;
     }

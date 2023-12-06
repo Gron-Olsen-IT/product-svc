@@ -18,8 +18,8 @@ public class InfraRepoDocker : IInfraRepo {
     public async Task<HttpStatusCode> authenticateUser(string token){
         // Sæt headeren
         _logger.LogInformation("authenticateUser | Token:" + token);
-        httpClient.DefaultRequestHeaders.Add("JWT_TOKEN", token);
-        var response = await httpClient.GetAsync("auth/verify/");
+        httpClient.DefaultRequestHeaders.Add("Authorization", token);
+        var response = await httpClient.PostAsync("auth/authorize/", null);
         return response.StatusCode;
     }
 

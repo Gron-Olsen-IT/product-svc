@@ -19,7 +19,7 @@ public class InfraRepoDocker : IInfraRepo {
         // Sæt headeren
         _logger.LogInformation("authenticateUser | Token:" + token);
         httpClient.DefaultRequestHeaders.Add("Authorization", token);
-        var response = await httpClient.GetAsync("auth/authorize/");
+        var response = await httpClient.PostAsync("auth/authorize/", null);
         return response.StatusCode;
     }
 

@@ -44,7 +44,7 @@ public class ProductsController : ControllerBase
                 string headerValue = Request.Headers["Authorization"]!;
                 _logger.LogInformation("User is getting products | Token: " + headerValue);
                 var response = await _infraRepo.authenticateUser(headerValue);
-                _logger.LogInformation("User is getting products | Response: {Response}", response);
+                _logger.LogInformation("User is getting products | Response: " + response);
                 if (response != HttpStatusCode.OK)
                 {
                     return Unauthorized();

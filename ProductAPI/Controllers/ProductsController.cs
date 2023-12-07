@@ -38,23 +38,6 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            // Get the value of a specific header
-            try
-            {
-                string headerValue = Request.Headers["Authorization"]!;
-                _logger.LogInformation("User is getting products | Token: " + headerValue);
-                var response = await _infraRepo.authenticateUser(headerValue);
-                _logger.LogInformation("User is getting products | Response: " + response);
-                if (response != HttpStatusCode.OK)
-                {
-                    return Unauthorized();
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error in Get");
-                throw;
-            }
             return await _service.Get();
         }
         catch (Exception e)

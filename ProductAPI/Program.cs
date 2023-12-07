@@ -6,8 +6,6 @@ using NLog.Web;
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
-
-
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +24,6 @@ try
 
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();
-    
 
     // Add services to the container.
     builder.Logging.ClearProviders();

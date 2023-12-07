@@ -4,15 +4,6 @@ using MongoDB.Bson.Serialization.Attributes;
 
 public record Product
 {
-    public Product (string sellerId, string productName, string description, int valuation, DateTime createAt, int status)
-    {
-        SellerId = sellerId;
-        ProductName = productName;
-        Description = description;
-        Valuation = valuation;
-        CreateAt = createAt;
-        Status = status;
-    }
 
     public Product (string id, string productName, string description, string sellerId, int valuation, DateTime createAt, int status)
     {
@@ -24,6 +15,16 @@ public record Product
         CreateAt = createAt;
         Status = status;
     }
+
+    public Product (ProductDTO productDTO){
+        ProductName = productDTO.ProductName;
+        Description = productDTO.Description;
+        SellerId = productDTO.SellerId;
+        Valuation = productDTO.Valuation;
+        CreateAt = productDTO.CreateAt;
+        Status = productDTO.Status;
+    }
+
     
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

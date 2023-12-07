@@ -45,7 +45,7 @@ public class ProductService : IProductService
 
     public async Task<Product> Post(ProductDTO productDTO)
     {
-       Product product = new Product(productDTO.SellerId, productDTO.Valuation, productDTO.CreateAt, productDTO.Status);
+       Product product = new Product(productDTO);
         try
         {
             _logger.LogInformation("User is posting a product", product);

@@ -25,8 +25,9 @@ public class ProductServicePut
         string sellerIdValid = "1000";
         _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid, jwtTokenValid)).ReturnsAsync(HttpStatusCode.OK);
         product1.Id = "1";
+        product1.SellerId = sellerIdValid;
         _mockMongoRepository = new Mock<IProductRepository>();
-        _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(HttpStatusCode.OK);
+        _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(product1);
         _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
 
@@ -38,7 +39,6 @@ public class ProductServicePut
     public async Task ProductUpdatedSuccesfully()
     {
         //Arrange
-        
         //Act
         Product responseProduct = await _service.Put(product1, jwtTokenValid);
         Assert.That(responseProduct, Is.EqualTo(product1));

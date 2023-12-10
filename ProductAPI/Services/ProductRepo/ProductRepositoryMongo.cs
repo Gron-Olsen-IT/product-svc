@@ -24,15 +24,18 @@ public class ProductRepositoryMongo : IProductRepository
         {
             Console.WriteLine(e);
         }
-        try {
+        try
+        {
             string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")!;
             var mongoDatabase = new MongoClient(connectionString).GetDatabase("product_db");
             _collection = mongoDatabase.GetCollection<Product>("products");
-        
-        }catch(Exception e){
-            _logger.LogError("Something is wrong with the CONNECTION_STRING",  e);
+
         }
-        
+        catch (Exception e)
+        {
+            _logger.LogError("Something is wrong with the CONNECTION_STRING", e);
+        }
+
 
     }
 
@@ -57,17 +60,31 @@ public class ProductRepositoryMongo : IProductRepository
         return _collection.Find(x => ids.Contains(x.Id!)).ToListAsync();
     }
 
-    public async Task<Product> Post([FromBody] Product product)
+    public async Task<Product> Post([FromBody] ProductDTO productDTO)
     {
+        Product product = new Product(productDTO);
         await _collection!.InsertOneAsync(product);
         return product;
     }
 
-    public Task<HttpStatusCode> Put([FromBody] Product product)
+    public async Task<Product> Put([FromBody] Product product)
     {
         try
         {
-            _collection.ReplaceOne(x => x.Id == product.Id, product);
+            await _collection!.ReplaceOneAsync(x => x.Id == product.Id, product);
+            return product;   
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Error in ProductRepositoryMongo.Put: " + e.Message);
+        }
+    }
+
+    public Task<HttpStatusCode> Delete(string id)
+    {
+        try
+        {
+            _collection.DeleteOne(x => x.Id == id);
             return Task.FromResult(HttpStatusCode.OK);
         }
         catch (Exception e)

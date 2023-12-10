@@ -16,10 +16,10 @@ public class ProductRepositoryGet
 
     List<Product> testData = new List<Product>
             {
-                new Product ( "10", 200, DateTime.Now, 1 ),
-                new Product ( "3", 389, DateTime.Now, 3 ),
-                new Product ( "1", 1000, DateTime.Now, 5 ),
-                new Product ( "11", 500, DateTime.Now, 2 ),
+                new Product ("0", "Bil", "Ny bil", "10", 200, DateTime.Now, 1 ),
+                new Product ("1", "Taske", "Med fire rum", "3", 389, DateTime.Now, 3 ),
+                new Product ("2", "Anhængertræk", "Til alle biler", "1", 1000, DateTime.Now, 5 ),
+                new Product ("3", "Hus", "Nyt hus med fire toiletter", "11", 500, DateTime.Now, 2 ),
             };
 
     [SetUp]

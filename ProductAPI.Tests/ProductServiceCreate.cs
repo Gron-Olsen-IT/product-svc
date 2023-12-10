@@ -13,6 +13,7 @@ public class ProductRepositoryCreate
     private ProductService _service;
     private Mock<IProductRepository> _mockMongoRepository;
     private Mock<IInfraRepo> _mockInfraRepo;
+    private string jwtTokenValid;
 
     private Mock<ILogger<ProductService>> _mockLogger;
 
@@ -26,7 +27,8 @@ public class ProductRepositoryCreate
         
         _mockInfraRepo = new Mock<IInfraRepo>();
         string sellerIdValid = "1000";
-        _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid)).ReturnsAsync(HttpStatusCode.OK);
+        jwtTokenValid = "okmasoimj435oi2m34ip56oj1345+0i2+103291rmk21k0r+1k3+0rj1ri351ontoin542n";
+        _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid, jwtTokenValid)).ReturnsAsync(HttpStatusCode.OK);
 
         _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
@@ -35,12 +37,12 @@ public class ProductRepositoryCreate
     public async Task ProductCreateSuccesful()
     {
         //Arrange
-        ProductDTO productDTO = new ProductDTO("1000", 1000, DateTime.Now, 8);
+        ProductDTO productDTO = new ProductDTO("1000","Taske", "Dejlig taske", 1000, DateTime.Now, 5);
         //Act
-        await _service.Post(productDTO);
+        await _service.Post(productDTO, jwtTokenValid);
 
-        Product responseProduct = await _service.Post(productDTO);
-        ProductDTO responseDTO = new ProductDTO(responseProduct.SellerId, responseProduct.Valuation, responseProduct.CreateAt, responseProduct.Status);
+        Product responseProduct = await _service.Post(productDTO, jwtTokenValid);
+        ProductDTO responseDTO = new ProductDTO(responseProduct.SellerId, responseProduct.ProductName, responseProduct.Description, responseProduct.Valuation, responseProduct.CreateAt, responseProduct.Status);
         Assert.That(responseDTO, Is.EqualTo(productDTO));
     }
 
@@ -66,9 +68,9 @@ public class ProductRepositoryCreate
         await Task.Run(() =>
         {
             //Arrange
-            ProductDTO productDTO = new ProductDTO("1000", -10, DateTime.Now, 5);
+            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, 5);
             //Act
-            Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO));
+            Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO, jwtTokenValid));
         });
     }
 
@@ -78,9 +80,9 @@ public class ProductRepositoryCreate
         await Task.Run(() =>
         {
             //Arrange
-            ProductDTO productDTO = new ProductDTO("1000", 2000, DateTime.Now, -2);
+            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, 5);
             //Act
-            Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO));
+            Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO, jwtTokenValid));
         });
     }
 

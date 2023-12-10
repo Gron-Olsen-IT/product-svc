@@ -1,10 +1,11 @@
 namespace ProductAPI.Models;
+
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 public record Product
 {
-
     public Product (string id, string productName, string description, string sellerId, int valuation, DateTime createAt, int status)
     {
         Id = id;
@@ -25,7 +26,7 @@ public record Product
         Status = productDTO.Status;
     }
 
-    
+
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }

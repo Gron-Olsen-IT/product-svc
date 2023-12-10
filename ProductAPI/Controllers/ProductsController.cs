@@ -76,33 +76,65 @@ public class ProductsController : ControllerBase
         }
     }
 
-
-
-
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)
     {
-        Product returnProduct = await _service.Post(productDTO);
-        if (returnProduct != null)
+        try 
         {
-            return Ok(returnProduct);
+            string JWT = Request.Headers["Authorization"]!;
+            _logger.LogInformation("Product posted" + productDTO + " with JWT " + JWT);
+            return Ok(await _service.Post(productDTO, JWT));
         }
-        else
+        catch (ArgumentException e)
         {
-            return BadRequest();
+            _logger.LogError(e, "Error in Post: ArgumentException");
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in Post - possible token is not valid");
+            return BadRequest(e.Message);
         }
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Put([FromBody] Product product)
+    [HttpPut("")]
+    public async Task<ActionResult<Product>> Put([FromBody] Product product)
     {
-        if (_service.Put(product) != null)
-        {
-            return Ok(product);
+        _logger.LogInformation("User is putting a product", product);
+        try {
+            string JWT = Request.Headers["Authorization"]!;
+            _logger.LogInformation("Product put", product);
+            return Ok(await _service.Put(product, JWT));
         }
-        else
+        catch (ArgumentException e)
         {
-            return BadRequest();
+            _logger.LogError(e, "Error in Put: ArgumentException");
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in Put - possible token is not valid");
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        try {
+            _logger.LogInformation("Product deleted", id);
+            await _service.Delete(id);
+            return Ok("Product deleted " + id);
+        }
+        catch (ArgumentException e)
+        {
+            _logger.LogError(e, "Error in Delete: ArgumentException");
+            return BadRequest(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error in Delete - possible token is not valid");
+            return BadRequest(e.Message);
         }
     }
 

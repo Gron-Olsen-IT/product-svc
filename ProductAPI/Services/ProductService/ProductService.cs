@@ -1,13 +1,4 @@
-
-
-using System;
 using System.Net;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
-using MongoDB.Driver;
 using ProductAPI.Models;
 
 namespace ProductAPI.Services;
@@ -43,12 +34,63 @@ public class ProductService : IProductService
         return _productRepository.Get(ids);
     }
 
-    public async Task<Product> Post(ProductDTO productDTO)
+    public async Task<Product> Post(ProductDTO productDTO, string token)
     {
-       Product product = new Product(productDTO);
         try
         {
-            _logger.LogInformation("User is posting a product", product);
+            _logger.LogInformation("User is posting a product", productDTO);
+            if (productDTO == null)
+            {
+                throw new ArgumentException("Product is null");
+            }
+            if (productDTO.SellerId == null)
+            {
+                throw new ArgumentException("SellerId is null");
+            }
+            _logger.LogInformation("ProductService | Post | Checking if user exists: " + token);
+            if (await _InfraRepo.doesUserExist(productDTO.SellerId, token) != HttpStatusCode.OK)
+            {
+                throw new ArgumentException("SellerId is not valid, user does not exist or token is invalid ");
+            }
+            if (productDTO.ProductName == "" || productDTO.ProductName == null)
+            {
+                throw new ArgumentException("Product name is empty");
+            }
+            List<Product> products = await _productRepository.Get();
+            if (products.Exists(x => x.ProductName == productDTO.ProductName && x.SellerId == productDTO.SellerId && x.Description == productDTO.Description))
+            {
+                throw new ArgumentException("Product already exists");
+            }
+            if (productDTO.Valuation < 0)
+            {
+                _logger.LogError("Valuation is negative");
+                throw new ArgumentException("Valuation is negative");
+            }
+            if (productDTO.Status < 0 || productDTO.Status > 10)
+            {
+                //throw new Exception("Status is negative");
+                throw new ArgumentException("Status is negative");
+            }
+
+            return await _productRepository.Post(productDTO);
+        }
+        catch (ArgumentException e)
+        {
+            _logger.LogError(e, "Error in Post: ArgumentException");
+            throw e;
+        }
+        catch
+        {
+            _logger.LogError("Error in Post");
+            throw;
+        }
+    }
+
+    public async Task<Product> Put(Product product, string token)
+    {
+        try
+        {
+            _logger.LogInformation("User is updating a product", product);
             if (product == null)
             {
                 throw new ArgumentException("Product is null");
@@ -57,12 +99,15 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("SellerId is null");
             }
-            /*
-            if (await _InfraRepo.verifyUser(product.SellerId) != HttpStatusCode.OK)
+            _logger.LogInformation("ProductService | Put | Checking if user exists: " + token);
+            if (await _InfraRepo.doesUserExist(product.SellerId, token) != HttpStatusCode.OK)
             {
-                throw new ArgumentException("SellerId is not valid");
+                throw new ArgumentException("SellerId is not valid, user does not exist or token is invalid ");
             }
-            */
+            if (product.ProductName == "" || product.ProductName == null)
+            {
+                throw new ArgumentException("Product name is empty");
+            }
             if (product.Valuation < 0)
             {
                 _logger.LogError("Valuation is negative");
@@ -73,63 +118,30 @@ public class ProductService : IProductService
                 //throw new Exception("Status is negative");
                 throw new ArgumentException("Status is negative");
             }
-            await _productRepository.Post(product);
-            _logger.LogInformation("Product posted", product);
-            return product;
+
+            return await _productRepository.Put(product);
         }
         catch (ArgumentException e)
         {
-            _logger.LogError(e, "Error in Post: ArgumentException");
-            throw;
+            _logger.LogError(e, "Error in Put: ArgumentException");
+            throw e;
         }
         catch
         {
-            _logger.LogError("Error in Post");
+            _logger.LogError("Error in Put");
             throw;
         }
     }
 
-    public async Task<Product> Put(Product product)
+    public Task<HttpStatusCode> Delete(string id)
     {
-
         try
         {
-            if (product == null)
-            {
-                throw new ArgumentException("Product is null");
-            }
-            if (product.SellerId == null)
-            {
-                throw new ArgumentException("SellerId is null");
-            }
-            if (await _InfraRepo.doesUserExist(product.SellerId) != HttpStatusCode.OK)
-            {
-                throw new ArgumentException("SellerId is not valid");
-            }
-            if (product.Valuation < 0)
-            {
-                throw new ArgumentException("Valuation is negative");
-            }
-            if (product.Status < 0 || product.Status > 10)
-            {
-                //throw new Exception("Status is negative");
-                throw new ArgumentException("Status is negative");
-            }
-
-            if (await _productRepository.Put(product) != HttpStatusCode.OK)
-            {
-                throw new ArgumentException("Product not found");            }
-            return product;
-
+            return _productRepository.Delete(id);
         }
-
-        catch (ArgumentException e)
+        catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
-        }
-        catch
-        {
             throw;
         }
     }

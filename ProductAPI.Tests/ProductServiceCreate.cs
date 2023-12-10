@@ -17,7 +17,7 @@ public class ProductRepositoryCreate
 
     private Mock<ILogger<ProductService>> _mockLogger;
 
-
+    ProductDTO productDTO = new ProductDTO("1000","Taske", "Dejlig taske", 1000, DateTime.Now, 5);
 
     [SetUp]
     public void Setup()
@@ -29,6 +29,8 @@ public class ProductRepositoryCreate
         string sellerIdValid = "1000";
         jwtTokenValid = "okmasoimj435oi2m34ip56oj1345+0i2+103291rmk21k0r+1k3+0rj1ri351ontoin542n";
         _mockInfraRepo.Setup(service => service.doesUserExist(sellerIdValid, jwtTokenValid)).ReturnsAsync(HttpStatusCode.OK);
+        _mockMongoRepository.Setup(service => service.Get()).ReturnsAsync(new List<Product>());
+        _mockMongoRepository.Setup(service => service.Post(productDTO)).ReturnsAsync(new Product(productDTO));
 
         _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }
@@ -37,7 +39,7 @@ public class ProductRepositoryCreate
     public async Task ProductCreateSuccesful()
     {
         //Arrange
-        ProductDTO productDTO = new ProductDTO("1000","Taske", "Dejlig taske", 1000, DateTime.Now, 5);
+        
         //Act
         await _service.Post(productDTO, jwtTokenValid);
 

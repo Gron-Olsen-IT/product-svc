@@ -83,7 +83,7 @@ public class ProductsController : ControllerBase
     /// Get products by ids
     /// </summary>
     /// <param name="Ids"></param>
-    /// <returns><products><product></product></products></returns>
+    /// <returns><products><product></product><product></product></products></returns>
     /// <response code="200">Returns the products with the given ids</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
@@ -169,7 +169,7 @@ public class ProductsController : ControllerBase
     /// Delete a product
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns><product></product></returns>
     /// <response code="200">Returns the product that was deleted</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>

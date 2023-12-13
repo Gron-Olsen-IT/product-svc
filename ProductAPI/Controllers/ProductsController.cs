@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Models;
 using ProductAPI.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ProductAPI.Controllers;
 
@@ -37,11 +38,11 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Get all products
     /// </summary>
-    /// <returns><products><product></product><product></product></products></returns>
     /// <response code="200">Returns all products</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
     /// <response code="404">If no products are found</response>
+    [SwaggerResponse(200, "List of products", typeof(List<Product>))]
     [HttpGet]
     public async Task<ActionResult<List<Product>>> Get()
     {

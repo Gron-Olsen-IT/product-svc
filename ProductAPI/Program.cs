@@ -1,6 +1,15 @@
 using ProductAPI.Services;
 using NLog;
 using NLog.Web;
+using sidecar_lib;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using VaultSharp;
+using VaultSharp.V1.AuthMethods.Token;
+using VaultSharp.V1.AuthMethods;
+using VaultSharp.V1.Commons;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -8,20 +17,13 @@ logger.Debug("init main");
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
-    switch (Environment.GetEnvironmentVariable("ENVIRONMENT"))
-    {
-        case "docker":
-            builder.Services.AddScoped<IInfraRepo, InfraRepoDocker>();
-            break;
-        case "localhost":
-            builder.Services.AddScoped<IInfraRepo, InfraRepoLocalhost>();
-            break;
-        default:
-            builder.Services.AddScoped<IInfraRepo, InfraRepoLocalhost>();
-            break;
-    }
+    AuthSidecar authSidecar = new(logger);
 
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Services.AddSingleton<IVaultClient>(authSidecar.vaultClient);
+    builder.Services.AddScoped<IInfraRepo, InfraRepoDocker>();
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();
 
@@ -29,22 +31,29 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
+    builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = authSidecar.GetTokenValidationParameters();
+    });
+
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.ConfigureSwagger("ProductAPI");
 
     var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+        c.SwaggerEndpoint("./v1/swagger.json", "Product API v1");
+    });
 
     app.UseHttpsRedirection();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();

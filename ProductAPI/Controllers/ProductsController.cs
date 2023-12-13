@@ -37,7 +37,7 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Get all products
     /// </summary>
-    /// <returns><products><product>Test</product></products></returns>
+    /// <returns><products><product></product><product></product></products></returns>
     /// <response code="200">Returns all products</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
@@ -60,7 +60,7 @@ public class ProductsController : ControllerBase
     /// Get a product by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns><product></product></returns>
     /// <response code="200">Returns the product with the given id</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
@@ -83,7 +83,7 @@ public class ProductsController : ControllerBase
     /// Get products by ids
     /// </summary>
     /// <param name="Ids"></param>
-    /// <returns></returns>
+    /// <returns><products><product></product><product></product></products></returns>
     /// <response code="200">Returns the products with the given ids</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
@@ -107,7 +107,7 @@ public class ProductsController : ControllerBase
     /// Post a product
     /// </summary>
     /// <param name="productDTO"></param>
-    /// <returns></returns>
+    /// <returns><product></product></returns>
     /// <response code="200">Returns the product that was posted</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>
@@ -135,10 +135,10 @@ public class ProductsController : ControllerBase
     }
 
     /// <summary>
-    /// Update a product
+    /// Updates a product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns></returns>
+    /// <returns><product></product></returns>
     /// <response code="200">Returns the product that was put</response>
     /// <response code="400">If the request is bad</response>
     /// <response code="401">If the user is not authorized</response>

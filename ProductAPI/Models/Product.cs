@@ -69,7 +69,7 @@ public record Product
     /// An integer representing the status of the product. 0 = created, 1 = active, 3 = closed
     /// </summary>
     /// <value>int</value>
-    /// <example>1</example>
+    /// <example>0</example>
     public int Status { get; set; }
 }
 

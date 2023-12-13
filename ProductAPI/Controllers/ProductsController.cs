@@ -1,12 +1,14 @@
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Models;
 using ProductAPI.Services;
 
 namespace ProductAPI.Controllers;
 
+[Authorize]
 [ApiController]
-[Route("[Controller]")]
+[Route("products")]
 public class ProductsController : ControllerBase
 {
     private readonly ILogger<ProductsController> _logger;
@@ -32,7 +34,14 @@ public class ProductsController : ControllerBase
 
     }
 
-
+    /// <summary>
+    /// Get all products
+    /// </summary>
+    /// <returns><products><product>Test</product></products></returns>
+    /// <response code="200">Returns all products</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no products are found</response>
     [HttpGet]
     public async Task<ActionResult<List<Product>>> Get()
     {
@@ -47,6 +56,15 @@ public class ProductsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Get a product by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <response code="200">Returns the product with the given id</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no product is found</response>
     [HttpGet("{id}")]
     public async Task<Product> Get(string id)
     {
@@ -61,6 +79,15 @@ public class ProductsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Get products by ids
+    /// </summary>
+    /// <param name="Ids"></param>
+    /// <returns></returns>
+    /// <response code="200">Returns the products with the given ids</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no products are found</response>
     [HttpPost("by-ids")]
     public async Task<IActionResult> Get([FromBody] List<string> Ids)
     {
@@ -76,6 +103,16 @@ public class ProductsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Post a product
+    /// </summary>
+    /// <param name="productDTO"></param>
+    /// <returns></returns>
+    /// <response code="200">Returns the product that was posted</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no products are found</response>
+    /// <response code="500">If the product could not be posted</response>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)
     {
@@ -97,6 +134,16 @@ public class ProductsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Update a product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    /// <response code="200">Returns the product that was put</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no products are found</response>
+    /// <response code="500">If the product could not be put</response>
     [HttpPut("")]
     public async Task<ActionResult<Product>> Put([FromBody] Product product)
     {
@@ -118,6 +165,16 @@ public class ProductsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete a product
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <response code="200">Returns the product that was deleted</response>
+    /// <response code="400">If the request is bad</response>
+    /// <response code="401">If the user is not authorized</response>
+    /// <response code="404">If no products are found</response>
+    /// <response code="500">If the product could not be deleted</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
@@ -137,8 +194,6 @@ public class ProductsController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
-
 }
 
 

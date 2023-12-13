@@ -38,10 +38,6 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Get all products
     /// </summary>
-    /// <response code="200">Returns all products</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no products are found</response>
     [SwaggerResponse(200, "List of products", typeof(List<Product>))]
     [HttpGet]
     public async Task<ActionResult<List<Product>>> Get()
@@ -61,11 +57,7 @@ public class ProductsController : ControllerBase
     /// Get a product by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns><product></product></returns>
-    /// <response code="200">Returns the product with the given id</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no product is found</response>
+    [SwaggerResponse(200, "Returns product by id", typeof(Product))]
     [HttpGet("{id}")]
     public async Task<Product> Get(string id)
     {
@@ -84,10 +76,6 @@ public class ProductsController : ControllerBase
     /// Get products by ids
     /// </summary>
     /// <param name="Ids"></param>
-    /// <response code="200">Returns the products with the given ids</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no products are found</response>
     [SwaggerResponse(200, "List of products by ids", typeof(List<Product>))]
     [HttpPost("by-ids")]
     public async Task<IActionResult> Get([FromBody] List<string> Ids)
@@ -108,12 +96,7 @@ public class ProductsController : ControllerBase
     /// Post a product
     /// </summary>
     /// <param name="productDTO"></param>
-    /// <returns><product></product></returns>
-    /// <response code="200">Returns the product that was posted</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no products are found</response>
-    /// <response code="500">If the product could not be posted</response>
+    [SwaggerResponse(200, "Returns posted product", typeof(Product))]
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)
     {
@@ -139,12 +122,7 @@ public class ProductsController : ControllerBase
     /// Updates a product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns><product></product></returns>
-    /// <response code="200">Returns the product that was put</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no products are found</response>
-    /// <response code="500">If the product could not be put</response>
+    [SwaggerResponse(200, "Returns updated product", typeof(Product))]
     [HttpPut("")]
     public async Task<ActionResult<Product>> Put([FromBody] Product product)
     {
@@ -170,12 +148,7 @@ public class ProductsController : ControllerBase
     /// Delete a product
     /// </summary>
     /// <param name="id"></param>
-    /// <returns><product></product></returns>
-    /// <response code="200">Returns the product that was deleted</response>
-    /// <response code="400">If the request is bad</response>
-    /// <response code="401">If the user is not authorized</response>
-    /// <response code="404">If no products are found</response>
-    /// <response code="500">If the product could not be deleted</response>
+    [SwaggerResponse(200, "Returns the id of the deleted product", typeof(string))]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {

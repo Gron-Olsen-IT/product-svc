@@ -14,7 +14,7 @@ public class ProductServicePut
     private Mock<IInfraRepo> _mockInfraRepo;
     private string jwtTokenValid;
 
-    Product product1 = new Product("1000", "Smuk vase", "Smuk vase der er virkelig smuk","TestSellerID1", 1000, DateTime.Now, 8);
+    Product product1 = new Product("1000", "Smuk vase", "Smuk vase der er virkelig smuk","TestSellerID1", 1000, DateTime.Now, ProductStatus.Active);
 
     [SetUp]
     public void Setup()

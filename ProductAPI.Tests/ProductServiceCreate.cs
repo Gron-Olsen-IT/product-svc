@@ -17,7 +17,7 @@ public class ProductRepositoryCreate
 
     private Mock<ILogger<ProductService>> _mockLogger;
 
-    ProductDTO productDTO = new ProductDTO("1000","Taske", "Dejlig taske", 1000, DateTime.Now, 5);
+    ProductDTO productDTO = new ProductDTO("1000","Taske", "Dejlig taske", 1000, DateTime.Now, ProductStatus.Active);
 
     [SetUp]
     public void Setup()
@@ -70,7 +70,7 @@ public class ProductRepositoryCreate
         await Task.Run(() =>
         {
             //Arrange
-            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, 5);
+            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, ProductStatus.Active);
             //Act
             Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO, jwtTokenValid));
         });
@@ -82,7 +82,7 @@ public class ProductRepositoryCreate
         await Task.Run(() =>
         {
             //Arrange
-            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, 5);
+            ProductDTO productDTO = new ProductDTO("1000", "Bil", "Smart bil", -10, DateTime.Now, ProductStatus.Active);
             //Act
             Assert.ThrowsAsync<ArgumentException>(async () => await _service.Post(productDTO, jwtTokenValid));
         });

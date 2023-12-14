@@ -116,6 +116,11 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ProductDTO productDTO)
     {
+        if (productDTO == null)
+        {
+            _logger.LogError("ProductDTO is null");
+            return StatusCode(404,"ProductDTO is null");
+        }
         try 
         {
             string JWT = Request.Headers["Authorization"]!;
@@ -125,12 +130,12 @@ public class ProductsController : ControllerBase
         catch (ArgumentException e)
         {
             _logger.LogError(e, "Error in Post: ArgumentException");
-            return BadRequest(e.Message);
+            return StatusCode(400, e.Message);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error in Post - possible token is not valid");
-            return BadRequest(e.Message);
+            _logger.LogError(e, "Error in Post: Exception");
+            return StatusCode(500, e.Message);
         }
     }
 

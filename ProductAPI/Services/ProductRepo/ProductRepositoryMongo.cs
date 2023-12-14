@@ -62,12 +62,17 @@ public class ProductRepositoryMongo : IProductRepository
 
     public async Task<Product> Post([FromBody] ProductDTO productDTO)
     {
-        Product product = new Product(productDTO);
+        try{
+            Product product = new Product(productDTO);
         await _collection!.InsertOneAsync(product);
         return product;
+        } catch (Exception e){
+            throw new Exception("Error in ProductRepositoryMongo.Post: " + e.Message);
+        }
+        
     }
 
-    public async Task<Product> Put([FromBody] Product product)
+    public async Task<Product> Put(Product product)
     {
         try
         {

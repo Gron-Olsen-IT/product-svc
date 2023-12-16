@@ -38,8 +38,7 @@ public class ProductService : IProductService
     {
         try
         {
-            CheckProductForErrors(productDTO, token);
-
+            await CheckProductForErrors(productDTO, token);
             return await _productRepository.Post(productDTO);
         }
         catch (ArgumentException e)
@@ -59,7 +58,7 @@ public class ProductService : IProductService
         try
         {
             _logger.LogInformation("User is updating a product", product);
-            CheckProductForErrors(new(product), token);
+            await CheckProductForErrors(new(product), token);
             return await _productRepository.Put(product);
         }
         catch (ArgumentException e)
@@ -87,11 +86,14 @@ public class ProductService : IProductService
         }
     }
 
-    public async void CheckProductForErrors(ProductDTO productDTO, string token){
+    public async Task CheckProductForErrors(ProductDTO productDTO, string token)
+    {
         _logger.LogInformation("User is posting a product", productDTO);
+        try
+        {
             if (productDTO == null)
             {
-                throw new ArgumentException("Product is null");
+                throw new ArgumentException("Product is null in CheckProductForErrors");
             }
             if (productDTO.SellerId == null)
             {
@@ -120,6 +122,17 @@ public class ProductService : IProductService
             {
                 throw new ArgumentException("Status is negative");
             }
+        }
+        catch (ArgumentException e)
+        {
+            _logger.LogError(e, "Error in CheckProductForErrors: ArgumentException");
+            throw e;
+        }
+        catch
+        {
+            _logger.LogError("Error in CheckProductForErrors");
+            throw; 
+        }
     }
 
 }

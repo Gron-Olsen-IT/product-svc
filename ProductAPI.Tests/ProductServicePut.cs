@@ -27,6 +27,7 @@ public class ProductServicePut
         product1.Id = "1";
         product1.SellerId = sellerIdValid;
         _mockMongoRepository = new Mock<IProductRepository>();
+        _mockMongoRepository.Setup(service => service.Get()).ReturnsAsync(new List<Product>());
         _mockMongoRepository.Setup(service => service.Put(product1)).ReturnsAsync(product1);
         _service = new ProductService(_mockInfraRepo.Object, _mockMongoRepository.Object, _mockLogger.Object);
     }

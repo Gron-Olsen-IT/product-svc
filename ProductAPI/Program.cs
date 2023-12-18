@@ -22,7 +22,7 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddSingleton<IVaultClient>(authSidecar.vaultClient);
+    //builder.Services.AddSingleton<IVaultClient>(authSidecar.vaultClient);
     builder.Services.AddScoped<IInfraRepo, InfraRepo>();
     builder.Services.AddScoped<IProductService, ProductService>();
     builder.Services.AddScoped<IProductRepository, ProductRepositoryMongo>();

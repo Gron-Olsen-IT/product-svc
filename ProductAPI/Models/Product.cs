@@ -78,6 +78,7 @@ public record Product
 
 public record ProductDTO
 {
+    [JsonConstructor]
     public ProductDTO(string sellerId, string productName, string description, int valuation, DateTime createAt, ProductStatus status)
     {
         SellerId = sellerId;
